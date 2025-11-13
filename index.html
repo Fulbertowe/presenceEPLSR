@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Système de Contrôle de Présence</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h1>PrésenceEPL</h1>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#" class="nav-link active" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Tableau de Bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-section="users">
+                        <i class="fas fa-users"></i>
+                        <span>Utilisateurs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-section="courses">
+                        <i class="fas fa-book"></i>
+                        <span>Unités d'Enseignement</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-section="attendance">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Gestion des Présences</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-section="fingerprint">
+                        <i class="fas fa-fingerprint"></i>
+                        <span>Empreintes Digitales</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-section="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Rapports & Statistiques</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Paramètres</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Contenu Principal -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Rechercher...">
+                </div>
+
+                <div class="user-menu">
+                    <div class="user-info">
+                        <div class="user-avatar" id="user-avatar">
+                            <!-- Rempli par JavaScript -->
+                        </div>
+                        <div class="user-details">
+                            <h4 id="user-name">Chargement...</h4>
+                            <p id="user-role">Administrateur</p>
+                        </div>
+                    </div>
+                    <div class="notifications">
+                        <button class="btn-icon">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                    </div>
+                    <button class="btn-icon" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Contenu -->
+            <main class="content">
+                <!-- Notifications -->
+                <div id="notifications"></div>
+
+                <!-- Section Tableau de Bord -->
+                <section id="dashboard" class="section active">
+                    <div class="section-header">
+                        <h2>Tableau de Bord</h2>
+                        <p>Vue d'ensemble du système de contrôle de présence</p>
+                    </div>
+
+                    <!-- Cartes Statistiques -->
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <div class="card-stat">
+                                <div class="card-content">
+                                    <h3>Total Utilisateurs</h3>
+                                    <div class="card-value" id="total-users">0</div>
+                                    <div class="card-change">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+12% ce mois</span>
+                                    </div>
+                                </div>
+                                <div class="card-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-stat">
+                                <div class="card-content">
+                                    <h3>Unités d'Enseignement</h3>
+                                    <div class="card-value" id="total-courses">0</div>
+                                    <div class="card-change">
+                                        <i class="fas fa-book"></i>
+                                        <span>Actives</span>
+                                    </div>
+                                </div>
+                                <div class="card-icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-stat">
+                                <div class="card-content">
+                                    <h3>Présences Aujourd'hui</h3>
+                                    <div class="card-value" id="today-attendance">0</div>
+                                    <div class="card-change">
+                                        <i class="fas fa-calendar-check"></i>
+                                        <span>En temps réel</span>
+                                    </div>
+                                </div>
+                                <div class="card-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-stat">
+                                <div class="card-content">
+                                    <h3>Taux de Présence</h3>
+                                    <div class="card-value" id="attendance-rate">0%</div>
+                                    <div class="card-change">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Moyenne générale</span>
+                                    </div>
+                                </div>
+                                <div class="card-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grille de Contenu -->
+                    <div class="content-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+                        <!-- Activités Récentes -->
+                        <div class="activity-list">
+                            <div class="table-header">
+                                <h3><i class="fas fa-history"></i> Activités Récentes</h3>
+                                <button class="btn btn-outline btn-sm">
+                                    <i class="fas fa-sync-alt"></i> Actualiser
+                                </button>
+                            </div>
+                            <div id="recent-activities">
+                                <div class="loading">
+                                    <div class="loading-spinner"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Actions Rapides -->
+                        <div class="quick-actions">
+                            <div class="table-header">
+                                <h3><i class="fas fa-bolt"></i> Actions Rapides</h3>
+                            </div>
+                            <div class="p-3">
+                                <div class="d-flex flex-column gap-2">
+                                    <button class="btn btn-primary" onclick="app.showSection('attendance')">
+                                        <i class="fas fa-fingerprint"></i> Enregistrer Présence
+                                    </button>
+                                    <button class="btn btn-outline" onclick="app.showSection('users')">
+                                        <i class="fas fa-user-plus"></i> Ajouter Utilisateur
+                                    </button>
+                                    <button class="btn btn-outline" onclick="app.showSection('courses')">
+                                        <i class="fas fa-book-medical"></i> Nouvelle UE
+                                    </button>
+                                    <button class="btn btn-outline" onclick="app.showSection('fingerprint')">
+                                        <i class="fas fa-fingerprint"></i> Gérer Empreintes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Utilisateurs -->
+                <section id="users" class="section">
+                    <div class="section-header">
+                        <h2>Gestion des Utilisateurs</h2>
+                        <p>Gérez les étudiants, enseignants et administrateurs</p>
+                    </div>
+
+                    <!-- Formulaire Ajout Utilisateur -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-user-plus"></i> Ajouter un Utilisateur</h3>
+                        <form id="add-user-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="user-name">Nom Complet</label>
+                                    <input type="text" id="user-name" class="form-control" placeholder="Nom et prénom" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-email">Adresse Email</label>
+                                    <input type="email" id="user-email" class="form-control" placeholder="email@exemple.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-role">Rôle</label>
+                                    <select id="user-role" class="form-control form-select" required>
+                                        <option value="">Sélectionner un rôle</option>
+                                        <option value="étudiant">Étudiant</option>
+                                        <option value="enseignant">Enseignant</option>
+                                        <option value="admin">Administrateur</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="fingerprint-id">ID Empreinte</label>
+                                    <input type="number" id="fingerprint-id" class="form-control" placeholder="ID numérique unique">
+                                </div>
+                                <div class="form-group">
+                                    <label for="user-password">Mot de Passe</label>
+                                    <input type="password" id="user-password" class="form-control" placeholder="Mot de passe temporaire" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-plus"></i> Ajouter l'Utilisateur
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Liste des Utilisateurs -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-list"></i> Liste des Utilisateurs</h3>
+                            <div class="table-actions">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="user-search" placeholder="Rechercher un utilisateur...">
+                                </div>
+                                <button class="btn btn-outline" onclick="app.loadUsers()">
+                                    <i class="fas fa-sync-alt"></i> Actualiser
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Rôle</th>
+                                        <th>ID Empreinte</th>
+                                        <th>Date d'Ajout</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="6" class="text-center p-3">
+                                            <div class="loading-spinner"></div>
+                                            <p>Chargement des utilisateurs...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="pagination-btn" disabled>
+                                <i class="fas fa-chevron-left"></i> Précédent
+                            </button>
+                            <span class="pagination-info">Page 1 sur 1</span>
+                            <button class="pagination-btn" disabled>
+                                Suivant <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Unités d'Enseignement -->
+                <section id="courses" class="section">
+                    <div class="section-header">
+                        <h2>Unités d'Enseignement</h2>
+                        <p>Gérez les cours et leurs horaires</p>
+                    </div>
+
+                    <!-- Formulaire Ajout UE -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-book-medical"></i> Ajouter une UE</h3>
+                        <form id="add-course-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="course-code">Code UE</label>
+                                    <input type="text" id="course-code" class="form-control" placeholder="Ex: INF101" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="course-name">Nom de l'UE</label>
+                                    <input type="text" id="course-name" class="form-control" placeholder="Nom complet de l'UE" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="course-schedule">Horaire</label>
+                                    <input type="text" id="course-schedule" class="form-control" placeholder="Ex: Lundi 10h-12h, Mercredi 14h-16h">
+                                </div>
+                                <div class="form-group">
+                                    <label for="course-description">Description</label>
+                                    <textarea id="course-description" class="form-control" placeholder="Description du cours" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-plus"></i> Ajouter l'UE
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Liste des UE -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-list"></i> Liste des Unités d'Enseignement</h3>
+                            <div class="table-actions">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="course-search" placeholder="Rechercher une UE...">
+                                </div>
+                                <button class="btn btn-outline" onclick="app.loadCourses()">
+                                    <i class="fas fa-sync-alt"></i> Actualiser
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="courses-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Nom</th>
+                                        <th>Horaire</th>
+                                        <th>Date d'Ajout</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center p-3">
+                                            <div class="loading-spinner"></div>
+                                            <p>Chargement des UE...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Présences -->
+                <section id="attendance" class="section">
+                    <div class="section-header">
+                        <h2>Gestion des Présences</h2>
+                        <p>Enregistrez et consultez les présences</p>
+                    </div>
+
+                    <!-- Enregistrement Rapide -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-fingerprint"></i> Enregistrement de Présence</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="attendance-fingerprint-id">ID Empreinte Digitale</label>
+                                <input type="number" id="attendance-fingerprint-id" class="form-control" placeholder="Scanner ou saisir l'ID d'empreinte">
+                            </div>
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" class="btn btn-primary w-100" onclick="app.recordAttendance()">
+                                    <i class="fas fa-check-circle"></i> Enregistrer la Présence
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filtres -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-filter"></i> Filtres</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="attendance-date">Date</label>
+                                <input type="date" id="attendance-date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance-course">UE</label>
+                                <select id="attendance-course" class="form-control form-select">
+                                    <option value="">Toutes les UE</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" class="btn btn-outline w-100" onclick="app.loadAttendance()">
+                                    <i class="fas fa-filter"></i> Appliquer les Filtres
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historique des Présences -->
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-history"></i> Historique des Présences</h3>
+                            <div class="table-actions">
+                                <button class="btn btn-outline" onclick="app.exportAttendance()">
+                                    <i class="fas fa-download"></i> Exporter
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="attendance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Utilisateur</th>
+                                        <th>UE</th>
+                                        <th>Date/Heure</th>
+                                        <th>Statut</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="5" class="text-center p-3">
+                                            <div class="loading-spinner"></div>
+                                            <p>Chargement des présences...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Empreintes Digitales -->
+                <section id="fingerprint" class="section">
+                    <div class="section-header">
+                        <h2>Gestion des Empreintes Digitales</h2>
+                        <p>Enregistrez et gérez les empreintes digitales</p>
+                    </div>
+
+                    <!-- Enregistrement d'Empreinte -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-fingerprint"></i> Enregistrer une Nouvelle Empreinte</h3>
+                        <form id="enroll-fingerprint-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="enroll-fingerprint-id">ID d'Empreinte</label>
+                                    <input type="number" id="enroll-fingerprint-id" class="form-control" placeholder="ID numérique unique" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="enroll-user">Associer à un Utilisateur</label>
+                                    <select id="enroll-user" class="form-control form-select">
+                                        <option value="">Sélectionner un utilisateur</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="fas fa-fingerprint"></i> Commencer l'Enregistrement
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="fingerprint-status mt-3">
+                            <p><i class="fas fa-info-circle"></i> Prêt à enregistrer. Suivez les instructions du capteur.</p>
+                        </div>
+                    </div>
+
+                    <!-- Vérification d'Empreinte -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-search"></i> Vérifier une Empreinte</h3>
+                        <div class="text-center">
+                            <button class="btn btn-outline" onclick="app.checkFingerprint()">
+                                <i class="fas fa-search"></i> Scanner et Vérifier
+                            </button>
+                            <div class="fingerprint-status mt-3" id="check-result">
+                                <p>Aucune vérification effectuée</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Rapports -->
+                <section id="reports" class="section">
+                    <div class="section-header">
+                        <h2>Rapports & Statistiques</h2>
+                        <p>Analyses détaillées des présences</p>
+                    </div>
+
+                    <!-- Statistiques -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Total des Présences</h3>
+                                <div class="stat-value" id="total-attendance">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Présences Aujourd'hui</h3>
+                                <div class="stat-value" id="today-stats">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Taux de Présence</h3>
+                                <div class="stat-value" id="attendance-percentage">0%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Export des Données -->
+                    <div class="form-container">
+                        <h3><i class="fas fa-download"></i> Export des Données</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="export-date-from">Date de Début</label>
+                                <input type="date" id="export-date-from" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="export-date-to">Date de Fin</label>
+                                <input type="date" id="export-date-to" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="export-course">UE</label>
+                                <select id="export-course" class="form-control form-select">
+                                    <option value="">Toutes les UE</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="export-format">Format</label>
+                                <select id="export-format" class="form-control form-select">
+                                    <option value="csv">CSV</option>
+                                    <option value="excel">Excel</option>
+                                    <option value="pdf">PDF</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="button" class="btn btn-primary w-100" onclick="app.generateReport()">
+                                    <i class="fas fa-file-export"></i> Générer le Rapport
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section Paramètres -->
+                <section id="settings" class="section">
+                    <div class="section-header">
+                        <h2>Paramètres du Système</h2>
+                        <p>Configurez les préférences de l'application</p>
+                    </div>
+
+                    <div class="form-container">
+                        <h3><i class="fas fa-cog"></i> Paramètres Généraux</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="system-name">Nom du Système</label>
+                                <input type="text" id="system-name" class="form-control" value="Système de Contrôle de Présence EPL">
+                            </div>
+                            <div class="form-group">
+                                <label for="auto-logout">Déconnexion Automatique (minutes)</label>
+                                <input type="number" id="auto-logout" class="form-control" value="30" min="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="backup-frequency">Fréquence de Sauvegarde</label>
+                                <select id="backup-frequency" class="form-control form-select">
+                                    <option value="daily">Quotidienne</option>
+                                    <option value="weekly" selected>Hebdomadaire</option>
+                                    <option value="monthly">Mensuelle</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2">
+                            <i class="fas fa-save"></i> Sauvegarder les Paramètres
+                        </button>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmation -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmation</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-message">Êtes-vous sûr de vouloir effectuer cette action ?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modal-cancel">Annuler</button>
+                <button class="btn btn-danger" id="modal-confirm">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Initialisation de l'application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Retirer la classe active de tous les liens
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    
+                    // Ajouter la classe active au lien cliqué
+                    this.classList.add('active');
+                    
+                    // Afficher la section correspondante
+                    const sectionId = this.getAttribute('data-section');
+                    app.showSection(sectionId);
+                });
+            });
+
+            // Menu mobile
+            document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+                document.querySelector('.sidebar').classList.toggle('active');
+            });
+
+            // Fermer le modal
+            document.querySelector('.modal-close').addEventListener('click', function() {
+                document.getElementById('confirmation-modal').style.display = 'none';
+            });
+
+            document.getElementById('modal-cancel').addEventListener('click', function() {
+                document.getElementById('confirmation-modal').style.display = 'none';
+            });
+
+            // Initialiser l'avatar utilisateur
+            const user = authManager.getCurrentUser();
+            if (user) {
+                const avatar = document.getElementById('user-avatar');
+                const name = user.displayName || user.email;
+                avatar.textContent = name.charAt(0).toUpperCase();
+                document.getElementById('user-name').textContent = name;
+            }
+        });
+    </script>
+</body>
+</html>
